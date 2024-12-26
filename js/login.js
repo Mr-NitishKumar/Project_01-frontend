@@ -17,8 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.message === 'Login successful') {
-                alert('Login successful! Redirecting to profile...');
-                window.location.href = 'profile.html';
+                localStorage.setItem('username', username)
+                localStorage.setItem('user_id', data.user_id);
+                localStorage.setItem('admin', data.admin);
+                alert('Login successful!');
+                window.location.href = 'index.html';
             } else {
                 alert('Login failed: ' + data.message);
             }

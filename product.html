@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List - E-Commerce</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #0d0d0d, #1c1c1e);
+            color: #f1f1f1;
+            padding: 2rem;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-container .product-item {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .product-container .product-item:hover {
+            transform: translateY(-10px);
+            background: #2a2a2a;
+        }
+
+        .product-container .product-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .product-container .product-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-container .product-item h3 {
+            font-size: 1.5rem;
+            color: #f39c12;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .product-container .product-item p {
+            color: #dcdcdc;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .product-container .product-item button {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-container .product-item button:hover {
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+            transform: translateY(-2px);
+        }
+
+        .cart-container {
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .cart-container h3 {
+            font-size: 1.8rem;
+            color: #f39c12;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .cart-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            color: #dcdcdc;
+        }
+
+        .cart-container ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .cart-container #checkout-btn {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .cart-container #checkout-btn:hover {
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Product Listing Section -->
+    <div class="product-container" id="product-container">
+        <!-- Product items will be dynamically injected here -->
+        <div class="product-item">
+            <img src="product1.jpg" alt="Product 1">
+            <h3>Product Name</h3>
+            <p>$100.00</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="product-item">
+            <img src="product2.jpg" alt="Product 2">
+            <h3>Product Name</h3>
+            <p>$150.00</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="cart-container">
+        <h3>Your Cart</h3>
+        <ul id="cart-items">
+            <!-- Cart items will appear here -->
+        </ul>
+        <button id="checkout-btn">Proceed to Checkout</button>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="js/product.js"></script>
+</body>
+</html>

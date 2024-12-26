@@ -1,42 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - E-Commerce Site</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script defer src="js/profile.js"></script>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="profile.html">Profile</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="profile">
-            <h1>User Profile</h1>
-            <form id="profile-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
-                
-                <button type="submit">Update Profile</button>
-            </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - E-Commerce</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      /* General Styling */
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(to bottom, #0d0d0d, #1c1c1e);
+        color: #f1f1f1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 0;
+      }
+      /* Sidebar Styling */
+      .sidebar {
+        background: #1e1e1e;
+        width: 250px;
+        height: 100vh; /* Full height of the viewport */
+        padding: 1.5rem;
+        box-shadow: 4px 0 8px rgba(0, 0, 0, 0.5);
+        position: fixed; /* Fix the sidebar in place */
+        top: 0; /* Align to the top of the page */
+        left: 0; /* Align to the left side of the page */
+        z-index: 100; /* Make sure the sidebar stays on top of other elements */
+      }
+
+      .profile-container {
+        display: flex;
+        width: 100%; /* Set to 100% since the sidebar is fixed now */
+        max-width: 1200px;
+        padding-left: 270px; /* Space for the fixed sidebar */
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      }
+
+      .sidebar-header {
+        margin-bottom: 1.5rem;
+      }
+
+      .sidebar-header h2 {
+        font-size: 1.8rem;
+        color: #f39c12;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar ul li {
+        margin-bottom: 1rem;
+      }
+
+      .sidebar ul li a {
+        text-decoration: none;
+        color: #ffffff;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        display: block;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      .sidebar ul li a:hover {
+        background: #333333;
+        color: #f39c12;
+        transform: translateX(5px);
+      }
+
+      #logout {
+        position: fixed; /* Fix the button in place */
+        top: 20px; /* Adjust the top position (distance from the top) */
+        right: 20px; /* Adjust the right position (distance from the right side) */
+        z-index: 9999; /* Ensure it stays on top of other elements */
+        height: 35px;
+        background: linear-gradient(45deg, #f39c12, #e67e22);
+        color: #000000;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      #logout:hover {
+        background: linear-gradient(45deg, #e67e22, #f39c12);
+        transform: translateY(-5px);
+      }
+
+      /* Main Content */
+      .profile-main {
+        flex: 1;
+        padding: 2rem;
+        background: #121212;
+      }
+
+      .profile-section {
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .profile-section h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #f39c12;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .profile-details,
+      .wishlist-items,
+      .review-list {
+        background: #1e1e1e;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      .profile-details p,
+      .wishlist-item p,
+      .review-item p {
+        margin: 0.5rem 0;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(45deg, #f39c12, #e67e22);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      .btn:hover {
+        background: linear-gradient(45deg, #e67e22, #f39c12);
+        transform: translateY(-5px);
+      }
+
+      .wishlist-item,
+      .review-item {
+        margin-bottom: 1rem;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        background: #2a2a2a;
+        border: 1px solid #333;
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus {
+        border: 1px solid #f39c12;
+        outline: none;
+      }
+
+      form label {
+        font-weight: bold;
+        color: #dcdcdc;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Profile Page -->
+    <div class="profile-container">
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>My Profile</h2>
+        </div>
+        <ul>
+          <li><a href="#profile-info">Profile Information</a></li>
+          <li><a href="#order-history">Order History</a></li>
+          <li><a href="#address">Address</a></li>
+          <li><a href="#payment-method">Payment Methods</a></li>
+          <li><a href="#wishlist">Wishlist</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="#reviews">Recent Reviews</a></li>
+          <li><a href="#settings">User Settings</a></li>
+          <li><a href="admin.html">Admin Dashboard</a></li>
+          <li><a href="product.html">Products Available</a></li>
+          <li><a href="analysis.html">Admin Analysis</a></li>
+        </ul>
+      </nav>
+
+      <!-- Logout Button -->
+      <button id="logout">Log Out</button>
+
+      <!-- Main Content -->
+      <div class="profile-main">
+        <!-- Profile Info Section -->
+        <section id="profile-info" class="profile-section">
+          <h3>Profile Information</h3>
+          <div class="profile-details">
+            <div>
+              <h2>Profile Details</h2>
+              <p><strong>Username:</strong> <span id="username"></span></p>
+              <p><strong>Email:</strong> <span id="email"></span></p>
+            </div>
+            <button class="btn" id="editProfileBtn">Edit Profile</button>
+          </div>
         </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 E-Commerce Site</p>
-    </footer>
-</body>
+
+        <!-- Order History Section -->
+        <section id="order-history" class="profile-section">
+          <h3>Order History</h3>
+          <ul id="orders"></ul>
+        </section>
+
+        <!-- Address Section -->
+        <section id="address" class="profile-section">
+          <h3>Addresses</h3>
+          <ul id="addresses"></ul>
+        </section>
+
+        <!-- Payment Method Section -->
+        <section id="payment-method" class="profile-section">
+          <h3>Payment Methods</h3>
+          <p><strong>Credit Card Ending in:</strong> 1234</p>
+          <button class="btn">Edit Payment Method</button>
+        </section>
+
+        <!-- Wishlist Section -->
+        <section id="wishlist" class="profile-section">
+          <h3>Wishlist</h3>
+          <div class="wishlist-items">
+            <div class="wishlist-item">
+              <p><strong>Product Name:</strong> Blue Sneakers</p>
+              <button class="btn">Add to Cart</button>
+            </div>
+            <div class="wishlist-item">
+              <p><strong>Product Name:</strong> Leather Wallet</p>
+              <button class="btn">Add to Cart</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Reviews Section -->
+        <section id="reviews" class="profile-section">
+          <h3>Recent Reviews</h3>
+          <div class="review-list">
+            <div class="review-item">
+              <p><strong>Product:</strong> Red T-shirt</p>
+              <p><strong>Review:</strong> Great quality and fits perfectly!</p>
+            </div>
+            <div class="review-item">
+              <p><strong>Product:</strong> Wireless Headphones</p>
+              <p><strong>Review:</strong> Excellent sound, would recommend!</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- User Settings Section -->
+        <section id="settings" class="profile-section">
+          <h3>User Settings</h3>
+          <form id="profile-form">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="usernameInput"
+              name="username"
+              placeholder="New Username"
+            />
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="emailInput"
+              name="email"
+              placeholder="New Email"
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="passwordInput"
+              name="password"
+              placeholder="New Password"
+            />
+            <button type="submit" class="btn">Save Changes</button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="js/profile.js"></script>
+  </body>
 </html>
